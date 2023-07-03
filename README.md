@@ -6,7 +6,7 @@ This repository contains the code and resources for a project that aims to ident
 
 ## Dataset
 
-The project uses the LIAR dataset, which consists of 12.8K human-labelled short statements obtained from PolitiFact.com. Each statement in the dataset is rated for truthfulness by an editor from PolitiFact.com. The dataset is available for download [here] (https://huggingface.co/datasets/liar).
+The project uses the LIAR dataset, which consists of 12.8K human-labelled short statements obtained from PolitiFact.com. Each statement in the dataset is rated for truthfulness by an editor from PolitiFact.com. The dataset is available for download [here](https://huggingface.co/datasets/liar).
 
 ## Project Goals
 
