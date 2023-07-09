@@ -14,7 +14,7 @@ The main goals of this project are as follows:
 
 1. To explore and implement different machine learning and deep learning text classification algorithms.
 2. Evaluate the performance of these algorithms in identifying and classifying fake news articles.
-3. Compare the performance of the implemented algorithms with an existing fine-tuned model available from Hugging Face.
+3. Compare the performance of the implemented algorithms with an [existing fine-tuned model](https://huggingface.co/Jawaher/LIAR-fake-news-roberta-base) available from Hugging Face.
 4. Establish a benchmarking framework to measure the performance of different models.
 
 ## Setup Instructions
