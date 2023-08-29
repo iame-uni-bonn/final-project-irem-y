@@ -35,7 +35,7 @@ def preprocess_data(dataset):
     return statements, statement_labels
 
 
-def main_training_pipeline(
+def check_input_parameters(
         save_path,
         algorithm,
         train_type,
@@ -43,7 +43,7 @@ def main_training_pipeline(
         log_file_name
         ):
     """
-    Main training pipeline that orchestrates model training and evaluation.
+    Function to check the input parameter.
 
     Args:
         save_path (str): Path to save the trained model.
@@ -67,14 +67,15 @@ def main_training_pipeline(
         'learning_rate',
         'epochs'
     ]
-
+    # Check save_path
     if type(save_path) != str:
         print(f"save_path must be a string. You gave {type(save_path)}.")
-        return
+        return False
 
+    # Check algorithm
     if type(algorithm) != str:
         print(f"algorithm has to be a string. You gave {type(algorithm)}.")
-        return
+        return False
 
     if algorithm not in ("logistic_regression", "random_forest", "bert"):
         print(
@@ -82,8 +83,9 @@ def main_training_pipeline(
             f" logistic_regression, random_forest or bert. "
             f"You gave {algorithm}."
         )
-        return
+        return False
 
+    # Check train_type
     if type(train_type) != str:
         print(f"train_type has to be a string. You gave {type(train_type)}.")
         return
@@ -94,22 +96,23 @@ def main_training_pipeline(
             f" normal, grid or random. "
             f" You gave {train_type}"
         )
-        return
+        return False
 
+    # Check train_hyperparameters
     if algorithm == "logistic_regression":
         if len(list(train_hyperparameters.keys())) != 2:
             print(
                 f"train_hyperparameters has to have four parameter. You gave "
                 f"{len(train_hyperparameters)}."
             )
-            return
+            return False
         if set(train_hyperparameters.keys()) != set(logistic_reg_parameter):
             print(
                 f"train_hyperparameters has to have the following keys: "
                 f"{logistic_reg_parameter}. "
                 f"You gave {list(train_hyperparameters.keys())}."
             )
-            return
+            return False
 
     if algorithm == "random_forest":
         if len(list(train_hyperparameters.keys())) != 3:
@@ -117,14 +120,14 @@ def main_training_pipeline(
                 f"train_hyperparameters has to have four parameter. You gave "
                 f"{len(train_hyperparameters)}."
             )
-            return
+            return False
         if set(train_hyperparameters.keys()) != set(random_forest_parameter):
             print(
                 f"train_hyperparameters has to have the following keys:"
                 f"{random_forest_parameter}"
                 f"You gave {list(train_hyperparameters.keys())}."
             )
-            return
+            return False
 
     if algorithm == "bert":
         if len(list(train_hyperparameters.keys())) != 4:
@@ -139,7 +142,46 @@ def main_training_pipeline(
                 f"{bert_parameter}. "
                 f"You gave {list(train_hyperparameters.keys())}."
             )
-            return
+            return False
+
+    # Check log_file_name
+    if type(log_file_name) != str:
+        print(f"algorithm has to be a string. You gave {type(log_file_name)}.")
+        return False
+
+    return True
+
+
+def main_training_pipeline(
+        save_path,
+        algorithm,
+        train_type,
+        train_hyperparameters,
+        log_file_name
+        ):
+    """
+    Main training pipeline that orchestrates model training and evaluation.
+
+    Args:
+        save_path (str): Path to save the trained model.
+        algorithm (str): Algorithm name ("logistic_regression",
+        "random_forest", or "bert").
+        train_type (str): Type of training ("normal", "grid", or "random").
+        train_hyperparameters (dict): Hyperparameters for the training.
+        log_file_name (str): Name of the log file.
+
+    """
+    # Check input parameter
+    input_check = check_input_parameters(
+        save_path,
+        algorithm,
+        train_type,
+        train_hyperparameters,
+        log_file_name
+    )
+
+    if input_check is False:
+        return
 
     # Set a fixed seed for reproducibility
     SEED = 42
