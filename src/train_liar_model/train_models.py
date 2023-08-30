@@ -86,7 +86,7 @@ def check_input_parameters(
         return False
 
     # Check train_type
-    if type(train_type) != str:
+    if algorithm != "bert" and type(train_type) != str:
         print(f"train_type has to be a string. You gave {type(train_type)}.")
         return
 
