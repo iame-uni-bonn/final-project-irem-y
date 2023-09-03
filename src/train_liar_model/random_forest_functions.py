@@ -2,6 +2,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import classification_report, accuracy_score
 from scipy.sparse import hstack
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 import joblib
 from main_functions import load_liar_dataset, prepare_dataframe
 
@@ -38,8 +39,11 @@ def vectorize_text_and_other_features(
 def train_random_forest_classifier(
         X_train,
         y_train,
+        random_state,
         n_estimators,
-        random_state
+        max_depth,
+        min_samples_leaf,
+        min_samples_split
         ):
     """
     Train a Random Forest classifier.
@@ -47,8 +51,12 @@ def train_random_forest_classifier(
     Args:
         X_train (csr_matrix): Training feature matrix.
         y_train (array-like): Training labels.
-        n_estimators (int): Number of trees in the forest.
         random_state (int): Seed for random number generation.
+        n_estimators (int): Number of trees in the forest.
+        max_depth (int): Maximum depth of each tree.
+        min_samples_leaf (int): Minimum number of samples in leaf nodes.
+        min_samples_split (int): Minimum number of samples required to split
+        an internal node.
 
     Returns:
         RandomForestClassifier: Trained Random Forest model.
@@ -57,7 +65,10 @@ def train_random_forest_classifier(
         # Create a Random Forest model
         random_forest_model = RandomForestClassifier(
             n_estimators=n_estimators,
-            random_state=random_state
+            random_state=random_state,
+            max_depth=max_depth,
+            min_samples_leaf=min_samples_leaf,
+            min_samples_split=min_samples_split
         )
 
         # Train the model
@@ -67,6 +78,113 @@ def train_random_forest_classifier(
         print("Training completed.")
 
         return random_forest_model
+    except Exception as e:
+        print("Error during model training:", str(e))
+        raise
+
+
+def train_random_forest_classifier_grid(
+        X_train,
+        y_train,
+        random_state,
+        param_grid
+        ):
+    """
+    Train a Random Forest classifier using grid search.
+
+    Args:
+        X_train (csr_matrix): Training feature matrix.
+        y_train (array-like): Training labels.
+        random_state (int): Seed for random number generation.
+        param_grid (dict): Dictionary specifying the hyperparameter grid to
+        search.
+
+    Returns:
+        RandomForestClassifier: Trained Random Forest model.
+    """
+    try:
+        # Create a Random Forest model
+        random_forest_model = RandomForestClassifier(
+            random_state=random_state
+        )
+
+        # Perform grid search
+        grid_search = GridSearchCV(
+            random_forest_model,
+            param_grid=param_grid,
+            cv=5
+         )
+
+        # Fit the model with grid search
+        grid_search.fit(X_train, y_train)
+
+        # Get the best parameters
+        best_params = grid_search.best_params_
+        print("Best Parameters:", best_params)
+
+        # Get the best model from grid search
+        random_forest_model = grid_search.best_estimator_
+
+        # Log messages
+        print("Grid search training completed.")
+
+        return random_forest_model
+
+    except Exception as e:
+        print("Error during model training:", str(e))
+        raise
+
+
+def train_random_forest_classifier_random(
+        X_train,
+        y_train,
+        random_state,
+        param_dist
+        ):
+    """
+    Train a Random Forest classifier using random search.
+
+    Args:
+        X_train (csr_matrix): Training feature matrix.
+        y_train (array-like): Training labels.
+        random_state (int): Seed for random number generation.
+        param_dist (dict): Dictionary specifying the hyperparameter
+        distributions for random search.
+
+    Returns:
+        RandomForestClassifier: Trained Random Forest model.
+    """
+    try:
+
+        # Create a Random Forest model
+        random_forest_model = RandomForestClassifier(
+            random_state=random_state
+        )
+
+        # Perform random search
+        random_search = RandomizedSearchCV(
+            random_forest_model,
+            param_distributions=param_dist,
+            n_iter=10,
+            cv=5,
+            random_state=random_state
+        )
+
+        # Fit the model with random search
+        random_search.fit(X_train, y_train)
+
+        # Get the best parameters
+        best_params = random_search.best_params_
+        print("Best Parameters:", best_params)
+
+        # Get the best model from random search
+        random_forest_model = random_search.best_estimator_
+
+        # Log messages
+        print("Random search training completed.")
+
+        return random_forest_model
+
     except Exception as e:
         print("Error during model training:", str(e))
         raise
@@ -129,18 +247,21 @@ def evaluate_random_forest_classifier_performance(
 
 def train_and_evaluate_random_forest_classifier(
         save_path,
+        train_type,
         max_features,
-        n_estimators,
-        random_state
+        random_state,
+        trainings_parameter
         ):
     """
     Train and evaluate a Random Forest classifier.
 
     Args:
         save_path (str): Path to save the trained model.
+        train_type (str): Style of training ("normal", "grid", or "random").
         max_features (int): Maximum number of features for TF-IDF.
-        n_estimators (int): Number of trees in the forest.
         random_state (int): Seed for random number generation.
+        trainings_parameter (dict): All needed trainings parameters, single or
+        as grid.
     """
     # Prepare the feature matrix X_train
     text_feature_columns = [
@@ -184,12 +305,30 @@ def train_and_evaluate_random_forest_classifier(
     Y_train = train_df['label']
 
     # Train the model
-    random_forest_model = train_random_forest_classifier(
-        X_train,
-        Y_train,
-        n_estimators,
-        random_state
-    )
+    if train_type == "basic":
+        random_forest_model = train_random_forest_classifier(
+            X_train=X_train,
+            Y_train=Y_train,
+            random_state=random_state,
+            n_estimators=trainings_parameter["n_estimators"],
+            max_depth=trainings_parameter["max_depth"],
+            min_samples_leaf=trainings_parameter["min_samples_leaf"],
+            min_samples_split=trainings_parameter["min_samples_split"]
+        )
+    elif train_type == "grid":
+        random_forest_model = train_random_forest_classifier_grid(
+            X_train=X_train,
+            Y_train=Y_train,
+            random_state=random_state,
+            param_grid=trainings_parameter
+        )
+    elif train_type == "random":
+        random_forest_model = train_random_forest_classifier_random(
+            X_train=X_train,
+            Y_train=Y_train,
+            random_state=random_state,
+            param_dist=trainings_parameter
+        )
 
     # Save the model
     save_random_forest_classifier_model(random_forest_model, save_path)

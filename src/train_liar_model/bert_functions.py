@@ -120,7 +120,7 @@ def save_model_and_tokenizer(model, tokenizer, save_path):
         raise
 
 
-def initialize_bert_model(model_name, num_labels, device):
+def initialize_bert_model(model_name, num_labels, device, dropout_rate):
     """
     Initialize a BERT-based sequence classification model.
 
@@ -128,13 +128,17 @@ def initialize_bert_model(model_name, num_labels, device):
         model_name (str): BERT model name.
         num_labels (int): Number of labels for classification.
         device (str): Device for model placement.
+        dropout_rate (float): Dropout rate for BERT layers to prevent
+        overfitting.
 
     Returns:
         BertForSequenceClassification: Initialized BERT model.
     """
     model = BertForSequenceClassification.from_pretrained(
         model_name,
-        num_labels=num_labels
+        num_labels=num_labels,
+        hidden_dropout_prob=dropout_rate,
+        attention_probs_dropout_prob=dropout_rate
     )
     model.to(device)
     return model
@@ -145,6 +149,8 @@ def train_bert_model(
         num_labels,
         lr,
         num_epochs,
+        dropout_rate,
+        weight_decay,
         train_loader,
         val_loader,
         device
@@ -157,6 +163,10 @@ def train_bert_model(
         num_labels (int): Number of labels for classification.
         lr (float): Learning rate.
         num_epochs (int): Number of training epochs.
+        dropout_rate (float): Dropout rate for BERT layers to prevent
+        overfitting.
+        weight_decay (float): Weight decay for the optimizer to prevent
+        overfitting.
         train_loader (DataLoader): PyTorch data loader for training data.
         val_loader (DataLoader): PyTorch data loader for validation data.
         device (str): Device for model placement.
@@ -165,9 +175,18 @@ def train_bert_model(
         BertForSequenceClassification: Trained BERT model.
     """
     try:
-        model = initialize_bert_model(model_name, num_labels, device)
+        model = initialize_bert_model(
+            model_name,
+            num_labels,
+            device,
+            dropout_rate
+        )
 
-        optimizer = optim.AdamW(model.parameters(), lr=lr)
+        optimizer = optim.AdamW(
+            model.parameters(),
+            lr=lr,
+            weight_decay=weight_decay
+        )
         criterion = torch.nn.CrossEntropyLoss()
 
         for epoch in range(num_epochs):
@@ -280,7 +299,9 @@ def train_and_evaluate_bert_classifier(
         max_length,
         lr,
         num_epochs,
-        batch_size
+        batch_size,
+        dropout_rate,
+        weight_decay
         ):
     """
     Train and evaluate a BERT-based classifier.
@@ -291,6 +312,10 @@ def train_and_evaluate_bert_classifier(
         lr (float): Learning rate for training.
         num_epochs (int): Number of training epochs.
         batch_size (int): Batch size for training.
+        dropout_rate (float): Dropout rate for BERT layers to prevent
+        overfitting.
+        weight_decay (float): Weight decay for the optimizer to prevent
+        overfitting.
     """
     # Prepare the feature matrix X_train
     text_feature_columns = [
@@ -388,6 +413,8 @@ def train_and_evaluate_bert_classifier(
         num_labels,
         lr,
         num_epochs,
+        dropout_rate,
+        weight_decay,
         train_loader,
         val_loader,
         device
