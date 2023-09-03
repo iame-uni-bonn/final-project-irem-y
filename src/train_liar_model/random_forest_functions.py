@@ -113,7 +113,7 @@ def train_random_forest_classifier_grid(
             random_forest_model,
             param_grid=param_grid,
             cv=5
-         )
+        )
 
         # Fit the model with grid search
         grid_search.fit(X_train, y_train)
@@ -308,7 +308,7 @@ def train_and_evaluate_random_forest_classifier(
     if train_type == "basic":
         random_forest_model = train_random_forest_classifier(
             X_train=X_train,
-            Y_train=Y_train,
+            y_train=Y_train,
             random_state=random_state,
             n_estimators=trainings_parameter["n_estimators"],
             max_depth=trainings_parameter["max_depth"],
@@ -318,14 +318,14 @@ def train_and_evaluate_random_forest_classifier(
     elif train_type == "grid":
         random_forest_model = train_random_forest_classifier_grid(
             X_train=X_train,
-            Y_train=Y_train,
+            y_train=Y_train,
             random_state=random_state,
             param_grid=trainings_parameter
         )
     elif train_type == "random":
         random_forest_model = train_random_forest_classifier_random(
             X_train=X_train,
-            Y_train=Y_train,
+            y_train=Y_train,
             random_state=random_state,
             param_dist=trainings_parameter
         )

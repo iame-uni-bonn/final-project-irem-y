@@ -94,6 +94,7 @@ def check_input_parameter(
 
     Args:
         algorithm (str): The algorithm to use, 'bert' or 'random_forest'.
+        train_type (str): Style of training ("normal", "grid", or "random").
         log_path (str): Path to the log file.
         save_path (str): Path to save the trained model.
         max_features (int): Maximum number of features for TF-IDF for
@@ -105,7 +106,7 @@ def check_input_parameter(
         boolean: A boolean if the parameter are correct or not
     """
     possible_algorithm = ["random_forest", "bert"]
-    possible_train_types = ["basic", "grid_search", "random_search"]
+    possible_train_types = ["basic", "grid", "random"]
     possible_bert_parameters = [
         "max_length",
         "lr",
@@ -214,9 +215,9 @@ def train_and_evaluate(
             return
 
         print(f"Training model with: {algorithm}")
-        print(f"The save path of the model is: {save_path}")
         print(f"The training parameter are: {training_parameters}")
         if algorithm == "bert":
+            print("")
             train_and_evaluate_bert_classifier(
                 save_path=save_path,
                 max_length=training_parameters["max_length"],
@@ -229,6 +230,7 @@ def train_and_evaluate(
         elif algorithm == "random_forest":
             print(f"Maximum number of features for TF-IDF are: {max_features}")
             print(f"The train style is: {train_type}")
+            print("")
             train_and_evaluate_random_forest_classifier(
                 save_path=save_path,
                 train_type=train_type,
