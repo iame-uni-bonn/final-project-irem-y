@@ -68,7 +68,8 @@ def train_random_forest_classifier(
             random_state=random_state,
             max_depth=max_depth,
             min_samples_leaf=min_samples_leaf,
-            min_samples_split=min_samples_split
+            min_samples_split=min_samples_split,
+            n_jobs=-1
         )
 
         # Train the model
@@ -112,7 +113,8 @@ def train_random_forest_classifier_grid(
         grid_search = GridSearchCV(
             random_forest_model,
             param_grid=param_grid,
-            cv=5
+            cv=5,
+            n_jobs=-1
         )
 
         # Fit the model with grid search
@@ -167,7 +169,8 @@ def train_random_forest_classifier_random(
             param_distributions=param_dist,
             n_iter=10,
             cv=5,
-            random_state=random_state
+            random_state=random_state,
+            n_jobs=-1
         )
 
         # Fit the model with random search
