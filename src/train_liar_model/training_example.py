@@ -1,6 +1,11 @@
 from main_functions import train_and_evaluate
 
 if __name__ == "__main__":
+    """
+    Examples for training a model with BERT or Random Forest algorithm
+    """
+
+    # Parameter for the training of a model with random forest algorithm
     random_forest_parameter_normal = {
         "n_estimators": 100,
         "max_depth": 20,
@@ -8,6 +13,7 @@ if __name__ == "__main__":
         "min_samples_split": 2
     }
 
+    # Grid for training with random forest algorithm with random or grid search
     random_forest_parameter_grid = {
         "n_estimators": [100, 200, 300],
         "max_depth": [10, 20, 30],
@@ -15,6 +21,7 @@ if __name__ == "__main__":
         "min_samples_split": [2, 5, 10]
     }
 
+    # Parameter for the training of a model with BERT algorithm
     bert_parameter = {
         "max_length": 128,
         "lr": 2e-5,
@@ -23,6 +30,7 @@ if __name__ == "__main__":
         "dropout_rate": 0.1,
         "weight_decay": 0.01
     }
+
     # Model trained with random forest algorithm
     rf_save_path = '/content/drive/My Drive/OSE_TEST/random_forest_model.pkl'
     rf_log_path = '/content/drive/My Drive/OSE_TEST/random_forest_training.log'
