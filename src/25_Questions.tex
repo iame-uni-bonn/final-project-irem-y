@@ -1,0 +1,308 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xurl}
+
+\title{25 OSE Questions}
+\author{Ayse Irem Yilmaz}
+\date{September 2023}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section{Question and Answers}
+
+\subsection{List five different tasks that belong to the field of natural language processing.}
+
+\begin{enumerate}
+    \item Text Classification/Sentiment Analysis: Automates sentiment assessment through machine learning, supporting content organisation and sentiment tracking.
+    \item Named Entity Recognition (NER): Identifies and categorises entities (e.g. names, organisations, locations) for improved information extraction.
+    \item Question Answering (QA): Develops systems to provide human-like responses to natural language questions, improving information retrieval.
+    \item Summarization: Extracts concise summaries from long texts, enabling efficient content consumption in applications such as Google News and inshorts.
+    \item Translation: Converts text between languages while preserving meaning, facilitating cross-lingual communication.
+\end{enumerate}
+
+
+\subsection{What is the fundamental difference between econometrics/statistics and supervised machine learning?}
+
+The main difference between econometrics/statistics and supervised machine learning is how they choose models. 
+In econometrics/statistics, we choose models based on our understanding of a system, especially in economics.
+In supervised machine learning, we use algorithms that learn from labelled data to make predictions.
+This approach is versatile and is used in fields such as image recognition or language understanding.
+So econometrics relies on our knowledge of a system, while supervised machine learning relies on data and algorithms to make predictions.
+
+
+\subsection{Can you use stochastic gradient descent to tune the hyperparameters of a random forest. If not, why?}
+
+Stochastic Gradient Descent (SGD) is not used to tune random forest hyperparameters.
+Random forests are based on the Classification and Regression Tree (CART) algorithm, which does not use gradient-based optimisation.
+Instead, hyperparameter tuning for random forests typically uses grid search or random search tailored for ensemble models.
+These techniques systematically explore parameter combinations.
+In contrast, SGD is suitable for models such as neural networks, where gradient-based optimisation is crucial.
+
+
+\subsection{What is imbalanced data and why can it be a problem in machine learning?}
+
+Imbalanced data occurs when one class in a dataset has significantly fewer instances than others, leading to biased model training, especially for the minority class.
+This problem is caused by a skewed class distribution, which hinders the model's ability to learn and accurately predict the underrepresented class.
+Addressing data imbalance is critical to improving model performance in the real world.
+Common mitigation strategies include resampling (oversampling the minority or undersampling the majority), using alternative scoring metrics such as F1 score, or using specialised techniques such as SMOTE to generate synthetic samples for the minority class to ensure more balanced and reliable model predictions.
+
+
+\subsection{Why are samples split into training and test data in machine learning?}
+
+Splitting data into training and test sets is a fundamental practice in machine learning to evaluate model performance and avoid overfitting.
+It allows us to train a model on a portion of the data (the training set) and evaluate its performance on unseen data (the test set).
+This separation helps to estimate how well the model will generalise to new, real data.
+It also provides a basis for tuning hyperparameters and making informed decisions about the use of the model.
+It also protects against scenarios where the model simply learns the training data, ensuring that it learns meaningful patterns instead.
+
+
+\subsection{Describe the pros and cons of word and character level}
+
+Word-level tokenisation splits text into words while preserving meaning and context, making it useful for various text analysis tasks. However, it can result in a large vocabulary.
+Character-level tokenisation splits text into individual characters, resulting in a small vocabulary and good handling of misspelled words. 
+However, characters lack individual meaning and this approach increases sequence length.
+In summary, word level is good for meaning but has a larger vocabulary, while character level reduces vocabulary but increases sequence length.
+
+
+\subsection{Why does fine-tuning usually give you a better performing model than feature extraction?}
+
+Fine-tuning typically outperforms feature extraction because it allows for more extensive adjustments to the model.
+In fine-tuning, all weights are adjustable, except for the final layers of the original task.
+This allows the model to adapt its feature representations to the nuances of the new task.
+The optimisation process starts with pre-trained values, exploiting prior knowledge and often leading to faster convergence and better solutions.
+Conversely, feature extraction only changes the final layers during training, limiting the model's ability to adapt to the subtleties of the new task.
+Fine-tuning provides more flexibility and better performance for transfer learning in different domains.
+
+
+\subsection{What are advantages of feature extraction over fine-tuning?}
+
+Feature extraction offers advantages over fine tuning in certain scenarios.
+It's well suited to tasks such as text and image processing, where the last hidden layer of a neural network may be sufficient.
+Compared to fine-tuning, feature extraction requires fewer computational resources and less data.
+With fixed, pre-trained model parameters, it's less prone to overfitting on limited target data.
+In addition, feature extraction allows for faster model deployment, making it suitable when rapid solution deployment is essential and less training time is required.
+It's a valuable approach in situations where efficiency and resource conservation are priorities.
+
+
+\subsection{Why are neural networks trained on GPUs or other specialized hardware?}
+
+GPUs and specialised hardware are critical for training neural networks because of their parallel processing capabilities.
+GPUs can perform multiple computations simultaneously, accelerating machine learning operations.
+They provide exceptional performance and energy efficiency for deep neural networks in both training and inference.
+Specialised hardware provides the necessary parallel processing, high memory bandwidth and optimised architectures to efficiently handle the computational demands of modern machine learning tasks.
+This speeds up training, reduces costs and facilitates the development of complex and powerful models.
+Both GPUs and specialised hardware are critical to the advancement of machine learning.
+
+
+\subsection{How can you write pytorch code that uses a GPU if it is available but also runs on a laptop that does not have a GPU.}
+
+\begin{lstlisting}
+import torch
+
+# Check if GPU is available
+use_gpu = torch.cuda.is_available()
+
+# Define the device to be used (CPU or GPU)
+device = torch.device("cuda" if use_gpu else "cpu")
+\end{lstlisting}
+
+
+\subsection{How many trainable parameters would the neural network in this video have if we remove the second hidden layer but leave it otherwise unchanged.}
+
+2nd layer:\\784 weights per neurons x 16 weights + 16 biases = 12.560 \\
+All Layer:\\784 x 16 + 16  x 16 + 16 x 10 (weights) + 16 + 16 +10 (biases) = 13.002 \\
+Result:\\
+13.002 - 12.560 = 442
+
+
+\subsection{Why are nonlinearities used in neural networks? Name at least three different nonlinearities.}
+
+Nonlinearities in neural networks are essential for modelling complex data relationships.
+Linear activation functions limit expressiveness, leading to linear models.
+Three common nonlinear activations include ReLU (max(0, $x$)), Sigmoid ($\tfrac{1}{1 + e^{-x}}$), and tanh ($\tfrac{e^{2x}-1}{e^{2x}+1}$), enabling neural networks to capture complex patterns and excel at various tasks.
+
+
+\subsection{Some would say that softmax is a bad name. What would be a better name and why?}
+
+The term "softmax" is used in machine learning to describe a function that transforms an input vector into a probability distribution.
+While "soft" implies that it is continuous and differentiable for gradient-based optimisation, "max" is misleading because it doesn't return the maximum value, but rather identifies which element is the largest.
+This function is often referred to as "argmax".
+Therefore, it would be more appropriate to rename it "softargmax", as this better reflects its functionality in transforming inputs into probability distributions and identifying the largest element.
+
+
+\subsection{What is the purpose of DataLoaders in pytorch?}
+
+PyTorch's DataLoaders streamline deep learning data handling.
+They load datasets and create training mini-batches.
+Efficient parallel processing across CPU cores reduces loading times, which is critical for large datasets.
+Data augmentation capabilities expand training sets and improve model generalisation.
+These loaders flexibly handle multiple data sources and formats, including files, databases and custom preprocessing.
+Shuffling prevents overfitting by randomising the order of data during training, making DataLoader a versatile tool for efficient and effective data management in PyTorch deep learning workflows.
+
+
+\subsection{Name a few different optimizers that are used to train deep neural networks.}
+
+\begin{enumerate}
+    \item Gradient Descent: A fundamental optimisation algorithm that iteratively adjusts model weights to minimise the cost function and find the global minimum.
+    \item Stochastic Gradient Descent (SGD): A variant of gradient descent that updates model parameters using the gradient of the loss function, often with random mini-batches of data, making it suitable for non-convex optimisation problems.
+    \item Adam (Adaptive Moment Estimation): An adaptive optimisation algorithm that combines elements of RMSprop and gradient descent with momentum. It dynamically adjusts the learning rates for each parameter during training, which can lead to faster convergence and better performance in practice.
+\end{enumerate}
+
+
+\subsection{What happens when the batch size during the optimization is set too small?}
+
+A very small batch size during optimisation can slow convergence due to noisy gradient estimates from small data subsets.
+This instability may require more training iterations, reducing the effectiveness of the model.
+Some optimisation algorithms can also become unstable with very small batches.
+While smaller batches can aid generalisation, extreme smallness can lead to underfitting, making it difficult to capture patterns.
+Balancing computational efficiency and learning effectiveness is crucial when choosing batch sizes, emphasising the need to find an optimal size that suits the specific task and data.
+
+
+\subsection{What happens when the batch size during the optimization is set too large?}
+
+Large batch sizes require more memory resources, which can strain system capabilities, leading to slower training or even crashes due to frequent memory swapping.
+In addition, very large batch sizes increase the risk of overfitting, as the model may fit the training data too closely, limiting its ability to generalise to unseen data.
+Finding the optimal batch size involves a trade-off between computational efficiency and the model's ability to generalise effectively, and requires experimentation to determine the most appropriate size for a given task and dataset.
+
+
+\subsection{Why can the feed-forward neural network we implemented for image classification not be used for language modeling?}
+
+The feed-forward neural network designed for image classification is unsuitable for language modelling.
+Text data relies on sequential context, where the meaning of each word is influenced by previous words.
+Effective language models must capture this context to generate coherent text.
+Feed-forward networks excel at capturing spatial image features, but lack the mechanisms to handle sequential, contextual text data of varying length.
+Consequently, they are poorly suited to language modelling tasks that require these capabilities.
+While they perform well in image classification, feed-forward neural networks struggle to understand and generate sequential text effectively.
+
+
+\subsection{Why is an encoder-decoder architecture used for machine translation (instead of the simpler encoder only architecture we used for language modelling)}
+
+An encoder-decoder architecture is preferred for machine translation over the simpler encoder-only approach used in language modelling for several reasons.
+Firstly, the decoder benefits from the embedding of the encoder, which improves translation quality.
+Secondly, the bidirectional processing in the encoder-decoder setup captures context from both directions, which contributes to more accurate translations.
+Thirdly, this architecture provides essential mechanisms for aligning, mapping and generating words, which are crucial for overcoming the challenges posed by languages with different structures, vocabularies and grammatical rules.
+Together, these factors contribute to the effectiveness of the encoder-decoder architecture in machine translation.
+
+
+\subsection{Is it a good idea to base your final project on a paper or blogpost from 2015? Why or why not?}
+
+Relying on a paper or blog post from 2015 for the final project may be a viable option, if it still provides relevant foundational knowledge.
+However, it's important to recognise that the field has developed rapidly since then.
+I would use a more recent source to ensure alignment with the latest developments.
+
+
+\subsection{Do you agree with the following sentence: To get the best model performance, you should train a model from scratch in Pytorch so you can influence every step of the process.}
+
+I disagree.
+Using pre-trained models in PyTorch offers several advantages.
+First, it saves time and resources by eliminating the need to build a model from scratch, speeding up development and allowing you to focus on other aspects of the project.
+Secondly, pre-trained models have learned features and patterns from large datasets, increasing accuracy and reliability even with limited data.
+This advantage is particularly important as pre-trained models retain their effectiveness on smaller datasets.
+In summary, the use of pre-trained models in PyTorch often yields superior results and proves to be a pragmatic approach to various machine learning tasks.
+
+
+\subsection{What is an example of an encoder-only model?}
+
+An example of an encoder-only model is BERT (Bidirectional Encoder Representations from Transformers).
+BERT focuses on encoding input sequences and learning contextual representations for various natural language processing tasks.
+Unlike decoder-only models such as T5, BERT does not generate output sequences, but excels at tasks such as text classification, question answering and named entity recognition by capturing bidirectional context in the input text.
+
+
+\subsection{ What is the vanishing gradient problem and how does it affect training?}
+
+The vanishing gradient problem hinders gradient-based training in neural networks, especially deep ones.
+It prevents efficient gradient flow from output to input layers, leading to several challenges:
+
+\begin{enumerate}
+    \item Learning difficulties and hindered parameter tuning in early layers.
+    \item Difficulty learning from data and convergence to suboptimal solutions.
+    \item Slow convergence with many iterations due to small gradients.
+    \item Local minima traps that hinder exploration of better solutions.
+\end{enumerate}
+
+In summary, the vanishing gradient problem complicates the training of deep neural networks by making gradients extremely small, preventing effective learning and optimisation.
+
+
+\subsection{Which model has a longer memory: RNN or Transformer?}
+
+The Transformer model has a longer memory than RNNs.
+Transformers are designed with mechanisms such as self-attention that enable them to capture long-range dependencies and relationships between words in a sentence, making them well suited to tasks that require extensive contextual understanding, such as machine translation, question answering, and chatbots.
+RNNs, on the other hand, have limitations in capturing long-range dependencies due to their sequential nature, which can lead to vanishing or exploding gradients and hinder their ability to remember information over extended sequences.
+Transformers are therefore often preferred to RNNs for tasks that require longer memory and complex language tasks.
+
+
+\subsection{What is the fundamental component of the transformer architecture?}
+
+The fundamental component of the Transformer architecture is the self-attention mechanism.
+Self-attention is a type of attention mechanism used in Transformers that allows the model to relate different positions within a single sequence to compute a representation of that sequence.
+This mechanism is essential for tasks such as machine reading, abstractive summarisation and image description generation.
+The ability of self-attention to capture contextual relationships across a sequence is what enables the Transformer architecture to excel in various natural language processing tasks, including machine translation and natural language understanding.
+
+\newpage 
+
+\section{Citation}
+Das, D. A. (2021, December 15). \textit{Types of Optimizers in Deep Learning | Analytics Vidhya.} Medium. 
+\\
+\url{https://medium.com/analytics-vidhya/this-blog-post-aims-at-explaining-the-behavior-of-different-algorithms-for-optimizing-gradient-46159a97a8c1}
+\\\\
+\textit{Fine Tuning vs Joint Training vs Feature Extraction.} (n.d.). Cross Validated.
+\\
+\url{https://stats.stackexchange.com/questions/255364/fine-tuning-vs-joint-training-vs-feature-extraction}
+\\\\
+Gillis, A. S. (2022, April 15). \textit{What is data splitting and why is it important?.} Enterprise AI.
+\\
+\url{https://www.techtarget.com/searchenterpriseai/definition/data-splitting}
+\\\\
+Hristov, H. (2023, June 16). \textit{Attention Mechanism in the Transformers Model.} Baeldung on Computer Science.
+\\
+\url{https://www.baeldung.com/cs/attention-mechanism-transformers}
+\\\\
+Hugginface (n.d.). \textit{T5.} 
+\\
+\url{https://huggingface.co/transformers/v4.9.2/model_doc/t5.html}
+\\\\
+Ibrahim, M. (2022, December 22). \textit{An Introduction to Transformer Networks.} Weights and Biases.
+\\
+\url{https://wandb.ai/mostafaibrahim17/ml-articles/reports/An-Introduction-to-Transformer-Networks--VmlldzoyOTE2MjY1}
+\\\\
+\textit{If fine tuning produces better performance than feature extraction, is there any    advantage of using feature extraction?} (n.d.). Cross Validated.
+\\
+\url{https://stats.stackexchange.com/questions/590330/if-fine-tuning-produces-better-performance-than-feature-extraction-is-there-any}
+\\\\
+Khanna, C. (2021, August 12). \textit{Word, subword, and character-based tokenization: Know the difference.} Medium.
+\\
+\url{https://towardsdatascience.com/word-subword-and-character-based-tokenization-know-the-difference-ea0976b64e17}
+\\\\
+\textit{Neuromorphic Hardware.} (n.d.). Fraunhofer Institute for Integrated Circuits IIS.
+\\
+\url{https://www.iis.fraunhofer.de/en/ff/kom/ai/neuromorphic.html}
+\newpage
+Sako, Y. (2018, August 9). \textit{“Is the term ‘softmax’ driving you nuts?”} Medium.
+\\
+\url{https://medium.com/@u39kun/is-the-term-softmax-driving-you-nuts-ee232ab4f6bd}
+\\\\
+Saturn Cloud (2023, August 4). \textit{PyTorch DataLoader: Features, Benefits, and How to Use it.} Saturn Cloud Blog.
+\\
+\url{https://saturncloud.io/blog/pytorch-dataloader-features-benefits-and-how-to-use-it/}
+\\\\
+Saturn Cloud (2023, July 17). \textit{What is a Pre-trained Model in Pytorch?} Saturn Cloud Blog.
+\\
+\url{https://saturncloud.io/blog/what-is-a-pretrained-model-in-pytorch/}
+\\\\
+Storage, P. (2023, August 24). \textit{CPU vs. GPU for Machine Learning.} Pure Storage Blog.
+\\
+\url{https://blog.purestorage.com/purely-informational/cpu-vs-gpu-for-machine-learning/}
+\\\\
+\textit{Why is increasing the non-linearity of neural networks desired?} (n.d.). Cross Validated.
+\\
+\url{https://stats.stackexchange.com/questions/275358/why-is-increasing-the-non-linearity-of-neural-networks-desired}
+
+\end{document}
