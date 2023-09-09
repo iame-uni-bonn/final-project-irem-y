@@ -3,7 +3,7 @@ from sklearn.metrics import classification_report, accuracy_score
 from transformers import BertTokenizer, BertForSequenceClassification
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
-from general_functions import load_liar_dataset, prepare_dataframe
+from utils.general_functions import load_liar_dataset, prepare_dataframe
 
 
 def prepare_features(df, text_features, other_features):
@@ -280,7 +280,11 @@ def evaluate_bert_model_performance(model, dataloader, device):
                     input_ids=inputs['input_ids'],
                     attention_mask=inputs['attention_mask']
                 )
-                logits = outputs.logits
+                # Check the attribute name in outputs for logits
+                if 'logits' in outputs:
+                    logits = outputs['logits']
+                else:
+                    logits = outputs['last_hidden_state']
                 preds = torch.argmax(logits, dim=1)
                 all_preds.extend(preds.cpu().numpy())
                 all_labels.extend(batch[3].cpu().numpy())
@@ -316,6 +320,9 @@ def train_and_evaluate_bert_classifier(
         overfitting.
         weight_decay (float): Weight decay for the optimizer to prevent
         overfitting.
+
+    Returns:
+        tuple: A tuple containing accuracy and classification report.
     """
     # Prepare the feature matrix X_train
     text_feature_columns = [
@@ -440,3 +447,4 @@ def train_and_evaluate_bert_classifier(
 
     # Save the trained BERT model
     save_model_and_tokenizer(trained_model, tokenizer, save_path)
+    return test_accuracy, test_classification_rep

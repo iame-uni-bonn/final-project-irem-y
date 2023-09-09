@@ -2,7 +2,7 @@ import torch
 import numpy as np
 import random
 from bert_functions import train_and_evaluate_bert_classifier
-from general_functions import (
+from utils.general_functions import (
     setup_logging,
     check_input_parameter,
     close_logging
