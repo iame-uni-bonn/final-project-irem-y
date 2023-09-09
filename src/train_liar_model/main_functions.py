@@ -10,7 +10,7 @@ from general_functions import (
 from random_forest_functions import train_and_evaluate_random_forest_classifier
 
 
-def train_and_evaluate(
+def train_and_evaluate_models(
         algorithm,
         train_type,
         log_path,

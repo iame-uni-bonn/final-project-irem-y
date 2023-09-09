@@ -1,5 +1,5 @@
 import os
-from main_functions import train_and_evaluate
+from main_functions import train_and_evaluate_models
 
 if __name__ == "__main__":
     """
@@ -52,7 +52,7 @@ if __name__ == "__main__":
         "random_forest",
         "random_forest_training.log"
     )
-    train_and_evaluate(
+    train_and_evaluate_models(
         algorithm="random_forest",
         train_type="basic",
         log_path=rf_log_path,
@@ -72,7 +72,7 @@ if __name__ == "__main__":
         "random_forest",
         "random_forest_training_random.log"
     )
-    train_and_evaluate(
+    train_and_evaluate_models(
         algorithm="random_forest",
         train_type="random",
         log_path=rf_random_log_path,
@@ -92,7 +92,7 @@ if __name__ == "__main__":
         "random_forest",
         "random_forest_training_grid.log"
     )
-    train_and_evaluate(
+    train_and_evaluate_models(
         algorithm="random_forest",
         train_type="grid",
         log_path=rf_grid_log_path,
@@ -104,7 +104,7 @@ if __name__ == "__main__":
     # Model trained with BERT algorithm
     bert_save_path = os.path.join(saving_path, "bert", "bert_model")
     bert_log_path = os.path.join(saving_path, "bert", "bert_training.log")
-    train_and_evaluate(
+    train_and_evaluate_models(
         algorithm="bert",
         train_type=None,
         log_path=bert_log_path,

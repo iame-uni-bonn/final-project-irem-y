@@ -228,6 +228,9 @@ def evaluate_random_forest_classifier_performance(
         test_df (DataFrame): Test DataFrame.
         text_features (list): List of columns containing text features.
         other_features (list): List of columns containing non-text features.
+
+    Returns:
+        tuple: A tuple containing accuracy and classification report.
     """
     X_test = vectorize_text_and_other_features(
         test_df,
@@ -242,10 +245,7 @@ def evaluate_random_forest_classifier_performance(
     accuracy = accuracy_score(test_df['label'], predictions)
     classification_rep = classification_report(test_df['label'], predictions)
 
-    # Log evaluation results
-    print("Evaluation results:")
-    print("Accuracy: ", accuracy)
-    print("Classification Report:\n", classification_rep)
+    return accuracy, classification_rep
 
 
 def train_and_evaluate_random_forest_classifier(
@@ -337,10 +337,16 @@ def train_and_evaluate_random_forest_classifier(
     save_random_forest_classifier_model(random_forest_model, save_path)
 
     # Evaluate the trained model
-    evaluate_random_forest_classifier_performance(
-        random_forest_model,
-        test_df,
-        text_feature_columns,
-        other_feature_columns,
-        max_features
-    )
+    accuracy, classification_rep =\
+        evaluate_random_forest_classifier_performance(
+            random_forest_model,
+            test_df,
+            text_feature_columns,
+            other_feature_columns,
+            max_features
+        )
+
+    # Log evaluation results
+    print("Evaluation results:")
+    print("Accuracy: ", accuracy)
+    print("Classification Report:\n", classification_rep)
