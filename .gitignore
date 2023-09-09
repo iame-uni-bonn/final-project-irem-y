@@ -160,6 +160,7 @@ cython_debug/
 *.pdf
 *.gz
 *.toc
+*.out
 
 # Pytask
 .pytask.sqlite3

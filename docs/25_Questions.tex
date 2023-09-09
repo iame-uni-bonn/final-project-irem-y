@@ -3,6 +3,7 @@
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{xurl}
+\usepackage{hyperref}
 
 \title{25 OSE Questions}
 \author{Ayse Irem Yilmaz}
@@ -115,12 +116,12 @@ device = torch.device("cuda" if use_gpu else "cpu")
 \end{lstlisting}
 
 
-\subsection{How many trainable parameters would the neural network in this video have if we remove the second hidden layer but leave it otherwise unchanged.}
+\subsection{How many trainable parameters would the neural network in \href{https://www.youtube.com/watch?v=aircAruvnKk&t=1s&ab_channel=3Blue1Brown}{this} video have if we remove the second hidden layer but leave it otherwise unchanged.}
 
-2nd layer:\\784 weights per neurons x 16 weights + 16 biases = 12.560 \\
-All Layer:\\784 x 16 + 16  x 16 + 16 x 10 (weights) + 16 + 16 +10 (biases) = 13.002 \\
+Total wights without 2nd layer:\\784 x 16+ 16 x 10 = 12.704 \\
+Total bias without 2nd layer:\\16 + 10 = 26 \\
 Result:\\
-13.002 - 12.560 = 442
+12.704 + 26 = 12.730
 
 
 \subsection{Why are nonlinearities used in neural networks? Name at least three different nonlinearities.}
