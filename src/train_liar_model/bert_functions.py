@@ -3,7 +3,7 @@ from sklearn.metrics import classification_report, accuracy_score
 from transformers import BertTokenizer, BertForSequenceClassification
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
-from main_functions import load_liar_dataset, prepare_dataframe
+from general_functions import load_liar_dataset, prepare_dataframe
 
 
 def prepare_features(df, text_features, other_features):
