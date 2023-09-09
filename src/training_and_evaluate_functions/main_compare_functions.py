@@ -1,5 +1,5 @@
 import torch
-from utils.general_functions import (
+from general_functions import (
     load_liar_dataset,
     prepare_dataframe
 )

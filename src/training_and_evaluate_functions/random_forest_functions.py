@@ -4,7 +4,7 @@ from sklearn.metrics import classification_report, accuracy_score
 from scipy.sparse import hstack
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 import joblib
-from utils.general_functions import load_liar_dataset, prepare_dataframe
+from general_functions import load_liar_dataset, prepare_dataframe
 
 
 def vectorize_text_and_other_features(
