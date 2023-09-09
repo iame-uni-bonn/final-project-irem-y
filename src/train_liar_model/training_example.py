@@ -1,9 +1,19 @@
+import os
 from main_functions import train_and_evaluate
 
 if __name__ == "__main__":
     """
     Examples for training a model with BERT or Random Forest algorithm
     """
+
+    # Path to the model folder for saving
+    saving_path = os.path.abspath(
+        os.path.join(
+            os.path.dirname(__file__),
+            "..", "..",
+            "models"
+        )
+    )
 
     # Parameter for the training of a model with random forest algorithm
     random_forest_parameter_normal = {
@@ -32,8 +42,16 @@ if __name__ == "__main__":
     }
 
     # Model trained with random forest algorithm
-    rf_save_path = '/content/drive/My Drive/OSE_TEST/random_forest_model.pkl'
-    rf_log_path = '/content/drive/My Drive/OSE_TEST/random_forest_training.log'
+    rf_save_path = os.path.join(
+        saving_path,
+        "random_forest",
+        "random_forest_model.pkl"
+    )
+    rf_log_path = os.path.join(
+        saving_path,
+        "random_forest",
+        "random_forest_training.log"
+    )
     train_and_evaluate(
         algorithm="random_forest",
         train_type="basic",
@@ -44,10 +62,16 @@ if __name__ == "__main__":
     )
 
     # Model trained with random forest algorithm and random search
-    rf_random_save_path =\
-        '/content/drive/My Drive/OSE_TEST/random_forest_model_random.pkl'
-    rf_random_log_path =\
-        '/content/drive/My Drive/OSE_TEST/random_forest_training_random.log'
+    rf_random_save_path = os.path.join(
+        saving_path,
+        "random_forest",
+        "random_forest_model_random.pkl"
+    )
+    rf_random_log_path = os.path.join(
+        saving_path,
+        "random_forest",
+        "random_forest_training_random.log"
+    )
     train_and_evaluate(
         algorithm="random_forest",
         train_type="random",
@@ -58,10 +82,16 @@ if __name__ == "__main__":
     )
 
     # Model trained with random forest algorithm and grid search
-    rf_grid_save_path =\
-        '/content/drive/My Drive/OSE_TEST/random_forest_model_grid.pkl'
-    rf_grid_log_path =\
-        '/content/drive/My Drive/OSE_TEST/random_forest_training_grid.log'
+    rf_grid_save_path = os.path.join(
+        saving_path,
+        "random_forest",
+        "random_forest_model_grid.pkl"
+    )
+    rf_grid_log_path = os.path.join(
+        saving_path,
+        "random_forest",
+        "random_forest_training_grid.log"
+    )
     train_and_evaluate(
         algorithm="random_forest",
         train_type="grid",
@@ -72,8 +102,8 @@ if __name__ == "__main__":
     )
 
     # Model trained with BERT algorithm
-    bert_save_path = '/content/drive/My Drive/OSE_TEST/bert_model.pkl'
-    bert_log_path = '/content/drive/My Drive/OSE_TEST/bert_training.log'
+    bert_save_path = os.path.join(saving_path, "bert", "bert_model")
+    bert_log_path = os.path.join(saving_path, "bert", "bert_training.log")
     train_and_evaluate(
         algorithm="bert",
         train_type=None,
