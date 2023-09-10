@@ -1,3 +1,17 @@
+"""
+The main training function to train the model with bert or random forest.
+
+Functions:
+    - train_and_evaluate_models(
+        algorithm,
+        train_type,
+        log_path,
+        save_path,
+        max_features,
+        training_parameters
+        )
+"""
+
 import torch
 import numpy as np
 import random
@@ -31,6 +45,9 @@ def train_and_evaluate_models(
         random forest training.
         training_parameters (dict): Dictionary containing algorithm-specific
         parameters.
+
+    Returns:
+        None
     """
     # Set seeds for reproducibility
     RANDOM_STATE = 42

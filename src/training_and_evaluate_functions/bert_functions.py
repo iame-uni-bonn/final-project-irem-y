@@ -1,3 +1,40 @@
+"""
+Function to train a model to recognize fake news with the BERT algorithm.
+
+Functions:
+    - prepare_features(df, text_features, other_features)
+    - tokenize_text_data(text_feature_matrix, tokenizer, max_length)
+    - create_data_loader(
+        train_encodings,
+        X_train_other,
+        train_labels,
+        batch_size
+        )
+    - save_model_and_tokenizer(model, tokenizer, save_path)
+    - initialize_bert_model(model_name, num_labels, device, dropout_rate)
+    - train_bert_model(
+        model_name,
+        num_labels,
+        lr,
+        num_epochs,
+        dropout_rate,
+        weight_decay,
+        train_loader,
+        val_loader,
+        device
+        )
+    - evaluate_bert_model_performance(model, dataloader, device)
+    - train_and_evaluate_bert_classifier(
+        save_path,
+        max_length,
+        lr,
+        num_epochs,
+        batch_size,
+        dropout_rate,
+        weight_decay
+        )
+"""
+
 import torch
 from sklearn.metrics import classification_report, accuracy_score
 from transformers import BertTokenizer, BertForSequenceClassification
@@ -109,6 +146,9 @@ def save_model_and_tokenizer(model, tokenizer, save_path):
         model (BertForSequenceClassification): The BERT model.
         tokenizer (BertTokenizer): The BERT tokenizer.
         save_path (str): Path to save the model and tokenizer.
+
+    Returns:
+        None
     """
     try:
         # Save the model and tokenizer to the specified path

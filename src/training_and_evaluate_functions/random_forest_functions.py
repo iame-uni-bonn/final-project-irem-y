@@ -1,3 +1,51 @@
+"""
+Function to train a model to recognize fake news with random forest algorithm.
+
+Functions:
+    - vectorize_text_and_other_features(
+        df,
+        text_features,
+        other_features,
+        max_features
+        )
+    - train_random_forest_classifier(
+        X_train,
+        y_train,
+        random_state,
+        n_estimators,
+        max_depth,
+        min_samples_leaf,
+        min_samples_split
+        )
+    - train_random_forest_classifier_grid(
+        X_train,
+        y_train,
+        random_state,
+        param_grid
+        )
+    - train_random_forest_classifier_random(
+        X_train,
+        y_train,
+        random_state,
+        param_dist
+        )
+    - save_random_forest_classifier_model(model, path)
+    - evaluate_random_forest_classifier_performance(
+        model,
+        test_df,
+        text_features,
+        other_features,
+        max_features
+        )
+    - train_and_evaluate_random_forest_classifier(
+        save_path,
+        train_type,
+        max_features,
+        random_state,
+        trainings_parameter
+        )
+"""
+
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import classification_report, accuracy_score
@@ -200,6 +248,9 @@ def save_random_forest_classifier_model(model, path):
     Args:
         model (RandomForestClassifier): Trained Random Forest model.
         path (str): Path to save the model.
+
+    Returns:
+        None
     """
     try:
         # Save the Random Forest model using joblib
@@ -265,6 +316,9 @@ def train_and_evaluate_random_forest_classifier(
         random_state (int): Seed for random number generation.
         trainings_parameter (dict): All needed trainings parameters, single or
         as grid.
+
+    Returns:
+        None
     """
     # Prepare the feature matrix X_train
     text_feature_columns = [

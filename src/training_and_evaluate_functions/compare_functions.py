@@ -1,3 +1,14 @@
+"""
+Functions to load and compare the different models.
+
+Functions:
+    - load_model_huggingface(model_name)
+    - evaluate_bert_model(bert_model, tokenizer, max_length, batch_size)
+    - extract_metrics_from_report(report)
+    - rank_models(model_data)
+    - load_and_compare_models(result_list, hugginface_model)
+"""
+
 import torch
 from general_functions import (
     load_liar_dataset,
@@ -42,7 +53,6 @@ def evaluate_bert_model(bert_model, tokenizer, max_length, batch_size):
 
     Returns:
         tuple: A tuple containing test accuracy and classification report.
-
     """
     # Prepare the feature matrix X_train
     text_feature_columns = [
@@ -116,7 +126,6 @@ def extract_metrics_from_report(report):
 
     Returns:
         tuple: A tuple containing precision, recall, and F1-score as floats.
-
     """
     substring_weighted_avg = report[report.find("weighted avg"):]
     parameter_list = []
@@ -137,6 +146,8 @@ def rank_models(model_data):
         model_data (list of tuple): A list of tuples containing model name,
         accuracy, and classification report.
 
+    Returns:
+        None
     """
     # Initialize dictionaries to store metrics
     accuracy_scores = {}
@@ -212,6 +223,8 @@ def load_and_compare_models(result_list, hugginface_model):
         hugginface_model (str): The name of the Hugging Face model to load and
         evaluate.
 
+    Returns:
+        None
     """
     huggingface_model, huggingface_tokenizer = load_model_huggingface(
         hugginface_model

@@ -1,3 +1,22 @@
+"""
+Help functions that are used in multiple other functions.
+
+Functions:
+    - latex_to_pdf(out_path, file_path)
+    - setup_logging(log_file_name)
+    - close_logging(log_file)
+    - load_liar_dataset()
+    - prepare_dataframe(train_data, test_data, validation_data)
+    - check_input_parameter(
+        algorithm,
+        train_type,
+        log_path,
+        save_path,
+        max_features,
+        training_parameters
+        )
+"""
+
 import pandas as pd
 import os
 import subprocess
@@ -7,11 +26,14 @@ from datasets import load_dataset
 
 def latex_to_pdf(out_path, file_path):
     """
-    Run Latex file to create PDF
+    Run Latex file to create PDF.
 
     Args:
         out_path (str): Path to save the output
         file_path (str): Path of the Excel file
+
+    Returns:
+        None
     """
     try:
         run_latex = "pdflatex -output-directory=" + out_path + " " + file_path
@@ -48,6 +70,9 @@ def close_logging(log_file):
 
     Args:
         log_file (file): The log file to be closed.
+
+    Returns:
+        None
     """
     log_file.close()
     sys.stdout = sys.__stdout__

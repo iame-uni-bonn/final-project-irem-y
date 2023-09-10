@@ -1,3 +1,5 @@
+"""Examples for how to train the models with different algorithms."""
+
 import os
 from main_training_function import train_and_evaluate_models
 
@@ -5,7 +7,6 @@ if __name__ == "__main__":
     """
     Examples for training a model with BERT or Random Forest algorithm
     """
-
     # Path to the model folder for saving
     saving_path = os.path.abspath(
         os.path.join(
