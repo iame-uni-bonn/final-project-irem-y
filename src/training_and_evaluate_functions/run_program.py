@@ -39,6 +39,14 @@ def train_and_compare_models(rf_name, bert_name, hf_name):
         )
     )
 
+    # Create saving folder if not existing yet
+    rf_path = os.path.join(saving_path, "random_forest")
+    if not os.path.exists(rf_path):
+        os.makedirs(rf_path)
+    bert_path = os.path.join(saving_path, "bert")
+    if not os.path.exists(bert_path):
+        os.makedirs(bert_path)
+
     # Parameter for the training of a model with random forest algorithm
     random_forest_parameter_normal = {
         "n_estimators": 450,
@@ -59,13 +67,11 @@ def train_and_compare_models(rf_name, bert_name, hf_name):
 
     # Model trained with random forest algorithm
     rf_save_path = os.path.join(
-        saving_path,
-        "random_forest",
+        rf_path,
         rf_name+".joblib"
     )
     rf_log_path = os.path.join(
-        saving_path,
-        "random_forest",
+        rf_path,
         rf_name+".log"
     )
 
@@ -89,10 +95,10 @@ def train_and_compare_models(rf_name, bert_name, hf_name):
         max_features=3000,
         training_parameters=random_forest_parameter_normal
     )
-    print(f"Rnadom forest {rf_name} successfully trained.")
+    print(f"Random forest {rf_name} successfully trained.")
     # Model trained with BERT algorithm
-    bert_save_path = os.path.join(saving_path, "bert", bert_name)
-    bert_log_path = os.path.join(saving_path, "bert", bert_name+".log")
+    bert_save_path = os.path.join(bert_path, bert_name)
+    bert_log_path = os.path.join(bert_path, "bert", bert_name+".log")
 
     # Check if the paths are free
     if os.path.isfile(bert_save_path) is True:
