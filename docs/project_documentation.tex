@@ -1,0 +1,97 @@
+\documentclass{article}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\begin{document}
+
+\title{Project Documentation: Recognizing Fake News Models}
+\author{Irem Yilmaz}
+\date{10/09/2023}
+\maketitle
+
+\section*{Project Overview}
+\textbf{Project Name:} \texttt{final-project-irem-y}
+
+This documentation provides an overview of the project, "Recognizing Fake News Models," which involves training models to recognize fake news and comparing their performance with an existing model using the \href{https://huggingface.co/datasets/liar}{Liar dataset} from \href{https://www.politifact.com/}{POLITIFACT.COM}.
+
+\section*{Project Description}
+The project's main objective is to tackle the challenge of identifying fake news statements accurately. Two different machine learning algorithms are used in this project: Random Forest and BERT.
+
+\subsection*{Random Forest Algorithm}
+Random Forest is an ensemble learning method that combines multiple decision trees to make predictions. In the context of this project, Random Forest is used as one of the models for recognizing fake news. It can handle both categorical and numerical features effectively, making it a versatile choice for classification tasks like fake news detection.
+
+\subsection*{BERT Algorithm}
+BERT (Bidirectional Encoder Representations from Transformers) is a state-of-the-art natural language processing model. Specifically, BERT is used in the form of \texttt{BertForSequenceClassification}. It excels in understanding the context and relationships between words in a sentence. However, due to its complexity, training BERT models can be challenging, especially in terms of lengthy training times and potential disconnects.
+
+\section*{Key Functionalities}
+\textbf{Automated Model Training (\texttt{run\_program.py}):}
+\begin{itemize}[label=--]
+  \item Trains a Random Forest model with predefined parameters.
+  \item Trains a BERT model (\texttt{BertForSequenceClassification}) with predefined parameters.
+  \item Loads a predefined model from Hugging Face and evaluates it.
+  \item Compares the three models based on the following evaluation metrics:
+    \begin{itemize}
+      \item \textbf{Accuracy:} Measures the overall correctness of the model's predictions.
+      \item \textbf{Precision (average Weighted):} Indicates the model's ability to make accurate positive predictions.
+      \item \textbf{Recall (average Weighted):} Measures the model's ability to correctly identify positive instances.
+      \item \textbf{F1-score (average Weighted):} Balances precision and recall, providing a harmonic mean of the two.
+    \end{itemize}
+\end{itemize}
+
+\section*{Project Results and Comparison}
+
+\subsection*{Random Forest Model}
+After 40 training iterations with random and grid search, achieved:
+\begin{itemize}
+  \item Accuracy: 0.426
+  \item Precision (average Weighted): 0.51
+  \item Recall (average Weighted): 0.43
+  \item F1-score (average Weighted): 0.41
+\end{itemize}
+
+\subsection*{BERT Model}
+Completed 4 successful trainings with limited optimization due to training time constraints. Achieved:
+\begin{itemize}
+  \item Accuracy: 0.234
+  \item Precision (average Weighted): 0.19
+  \item Recall (average Weighted): 0.23
+  \item F1-score (average Weighted): 0.17
+\end{itemize}
+
+Optimization challenges were faced due to lengthy training times and disconnects during training.
+
+\subsection*{Comparison with "Jawaher/LIAR-fake-news-roberta-base" Model from Hugging Face}
+\textbf{Ranking based on Accuracy:}
+\begin{enumerate}
+  \item random\_forest\_model, Accuracy: 0.43
+  \item bert\_model, Accuracy: 0.23
+  \item Jawaher/LIAR-fake-news-roberta-base, Accuracy: 0.21
+\end{enumerate}
+
+\textbf{Ranking based on Precision:}
+\begin{enumerate}
+  \item random\_forest\_model, Precision: 0.51
+  \item bert\_model, Precision: 0.19
+  \item Jawaher/LIAR-fake-news-roberta-base, Precision: 0.04
+\end{enumerate}
+
+\textbf{Ranking based on Recall:}
+\begin{enumerate}
+  \item random\_forest\_model, Recall: 0.43
+  \item bert\_model, Recall: 0.23
+  \item Jawaher/LIAR-fake-news-roberta-base, Recall: 0.21
+\end{enumerate}
+
+\textbf{Ranking based on F1-score:}
+\begin{enumerate}
+  \item random\_forest\_model, F1-score: 0.41
+  \item bert\_model: 0.17
+  \item Jawaher/LIAR-fake-news-roberta-base, F1-score: 0.07
+\end{enumerate}
+
+\section*{Project Conclusion}
+This project gave me a deeper insight into machine learning, its capabilities, and challenges. By working intensively with different algorithms, I got a better understanding of them and their advantages and disadvantages. The random forest algorithm has the advantage that the training time is short and the complexity of the programming is low. But it also reaches the optimization level quickly. BERT is more complex, and the training time is much longer, but I think this algorithm has the potential to give better results, although I haven't been able to show this in my project. This is mainly because of the long training time, and with the resources I had, mainly Google Collab, I faced the problems of interrupted runtimes and unfinished training even after several hours of training. In conclusion, this project has shown me that the possibilities of deep learning are huge and can help to make problems easier, for example in fake news recognition.
+
+\end{document}
