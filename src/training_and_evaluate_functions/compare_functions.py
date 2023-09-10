@@ -22,7 +22,8 @@ from bert_functions import (
 )
 from transformers import (
     AutoModelForSequenceClassification,
-    AutoTokenizer
+    AutoTokenizer,
+    logging
 )
 
 
@@ -36,6 +37,8 @@ def load_model_huggingface(model_name):
     Returns:
         tuple: A tuple containing the loaded model and tokenizer.
     """
+    # Only show errors
+    logging.set_verbosity_error()
     model = AutoModelForSequenceClassification.from_pretrained(model_name)
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     return model, tokenizer

@@ -37,7 +37,7 @@ Functions:
 
 import torch
 from sklearn.metrics import classification_report, accuracy_score
-from transformers import BertTokenizer, BertForSequenceClassification
+from transformers import BertTokenizer, BertForSequenceClassification, logging
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
 from general_functions import load_liar_dataset, prepare_dataframe
@@ -174,6 +174,11 @@ def initialize_bert_model(model_name, num_labels, device, dropout_rate):
     Returns:
         BertForSequenceClassification: Initialized BERT model.
     """
+
+    # Only show errors
+    logging.set_verbosity_error()
+
+    # Import pre-trained bert model and set it up
     model = BertForSequenceClassification.from_pretrained(
         model_name,
         num_labels=num_labels,
