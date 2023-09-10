@@ -1,8 +1,8 @@
 import os
-from training_and_evaluate_functions.main_training_functions import (
+from main_training_function import (
     train_and_evaluate_models
 )
-from training_and_evaluate_functions.main_compare_functions import (
+from main_compare_functions import (
     load_and_compare_models
 )
 
@@ -20,6 +20,7 @@ def train_and_compare_models(rf_name, bert_name, hf_name):
     saving_path = os.path.abspath(
         os.path.join(
             os.path.dirname(__file__),
+            "..",
             "..",
             "models"
         )
@@ -47,15 +48,25 @@ def train_and_compare_models(rf_name, bert_name, hf_name):
     rf_save_path = os.path.join(
         saving_path,
         "random_forest",
-        rf_name,
-        ".joblib"
+        rf_name+".joblib"
     )
     rf_log_path = os.path.join(
         saving_path,
         "random_forest",
-        rf_name,
-        ".log"
+        rf_name+".log"
     )
+
+    # Check if the paths are free
+    if os.path.isfile(rf_save_path) is True:
+        print(
+            f"The model {rf_save_path} already exist. "
+            f"Please use a different name as {rf_name}."
+        )
+    if os.path.isfile(rf_log_path) is True:
+        print(
+            f"The log file {rf_log_path} already exist. "
+            f"Please use a different name as {rf_name}."
+        )
 
     rf_accuracy, rf_report = train_and_evaluate_models(
         algorithm="random_forest",
@@ -68,7 +79,20 @@ def train_and_compare_models(rf_name, bert_name, hf_name):
 
     # Model trained with BERT algorithm
     bert_save_path = os.path.join(saving_path, "bert", bert_name)
-    bert_log_path = os.path.join(saving_path, "bert", bert_name, ".log")
+    bert_log_path = os.path.join(saving_path, "bert", bert_name+".log")
+
+    # Check if the paths are free
+    if os.path.isfile(bert_save_path) is True:
+        print(
+            f"The model {bert_save_path} already exist. "
+            f"Please use a different name as {bert_name}."
+        )
+    if os.path.isfile(bert_log_path) is True:
+        print(
+            f"The log file {bert_log_path} already exist. "
+            f"Please use a different name as {bert_name}."
+        )
+
     bert_accuracy, bert_report = train_and_evaluate_models(
         algorithm="bert",
         train_type=None,
