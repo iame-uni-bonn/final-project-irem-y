@@ -1,8 +1,9 @@
 import os
+from general_functions import latex_to_pdf
 from main_training_function import (
     train_and_evaluate_models
 )
-from main_compare_functions import (
+from compare_functions import (
     load_and_compare_models
 )
 
@@ -36,12 +37,12 @@ def train_and_compare_models(rf_name, bert_name, hf_name):
 
     # Parameter for the training of a model with BERT algorithm
     bert_parameter = {
-        "max_length": 128,
+        "max_length": 64,
         "lr": 2e-5,
-        "num_epochs": 6,
-        "batch_size": 32,
+        "num_epochs": 1,
+        "batch_size": 16,
         "dropout_rate": 0.2,
-        "weight_decay": 0.001
+        "weight_decay": 0
     }
 
     # Model trained with random forest algorithm
@@ -76,7 +77,7 @@ def train_and_compare_models(rf_name, bert_name, hf_name):
         max_features=3000,
         training_parameters=random_forest_parameter_normal
     )
-
+    print(f"Rnadom forest {rf_name} successfully trained.")
     # Model trained with BERT algorithm
     bert_save_path = os.path.join(saving_path, "bert", bert_name)
     bert_log_path = os.path.join(saving_path, "bert", bert_name+".log")
@@ -101,7 +102,7 @@ def train_and_compare_models(rf_name, bert_name, hf_name):
         max_features=None,
         training_parameters=bert_parameter
     )
-
+    print(f"BERT {bert_name} successfully trained.")
     load_and_compare_models(
         [
             (rf_name, rf_accuracy, rf_report),
@@ -113,8 +114,31 @@ def train_and_compare_models(rf_name, bert_name, hf_name):
 
 if __name__ == "__main__":
     # Run the program
+    """
     train_and_compare_models(
         "random_forest_model",
         "bert_model",
         "Jawaher/LIAR-fake-news-roberta-base"
     )
+    """
+    docs_path = os.path.join(
+        os.path.abspath(__file__),
+        "..",
+        "..",
+        "..",
+        "docs"
+    )
+    question_path = os.path.join(
+        docs_path,
+        "25_Questions.tex"
+    )
+
+    # Create PDFs
+    latex_to_pdf(docs_path, question_path)
+
+    project_documentation = os.path.join(
+        docs_path,
+        "project_documentation.tex"
+    )
+
+    latex_to_pdf(docs_path, project_documentation)

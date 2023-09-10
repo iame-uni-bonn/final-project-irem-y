@@ -1,6 +1,28 @@
 import pandas as pd
-from datasets import load_dataset
+import os
+import subprocess
 import sys
+from datasets import load_dataset
+
+
+def latex_to_pdf(out_path, file_path):
+    """
+    Run Latex file to create PDF
+
+    Args:
+        out_path (str): Path to save the output
+        file_path (str): Path of the Excel file
+    """
+    try:
+        run_latex = "pdflatex -output-directory=" + out_path + " " + file_path
+        subprocess.run(run_latex, stdout=subprocess.DEVNULL)
+        print(
+            f"PDF for {os.path.basename(file_path)} successfully created in:"
+            f" {out_path}"
+        )
+    except Exception as e:
+        print("Error compiling the lastex file:", str(e))
+        raise
 
 
 def setup_logging(log_file_name):
